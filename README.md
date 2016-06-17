@@ -15,6 +15,15 @@ docker run -d --name couchdb -p 5984:5984 \
            mcreations/couchdb 
 ```
 
+For creating initial databases, there is a parameter whose name is DATABASES_NAME and it can contain comma-seperated list of multiple database names as follows:
+```
+docker run -d --name couchdb -p 5984:5984 \
+           -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password \
+           -e DATABASES_NAME=db1,db2,db3 \
+           -v $HOME/data-couchdb:/usr/local/var/lib/couchdb \
+           mcreations/couchdb 
+```
+
 For testing the server use:
 ```
 curl http://127.0.0.1:5984/
