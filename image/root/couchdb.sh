@@ -64,8 +64,8 @@ echo "Process ID of CouchDB : $pid"
 wait_until_service_comes_up "http://localhost:5984"
 
 
-if [ ! -z ""$DATABASES_NAME"" ]; then
-IFS=',' read -a db_array <<< "$DATABASES_NAME"
+if [ ! -z ""$DATABASE_NAMES"" ]; then
+IFS=',' read -a db_array <<< "$DATABASE_NAMES"
 echo "#--------------------------------------------"
 echo "Creating databases ..."
 echo "---------------------------------------------"
