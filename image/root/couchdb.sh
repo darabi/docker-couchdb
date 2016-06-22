@@ -16,7 +16,7 @@ function wait_until_service_comes_up() {
       echo "... wait until $couchdb_url comming up to create databases ..."
     else
       sleep 1
-      echo "... wait until $couchdb_url comming up to create databases (HttpCode is ${HTTP_CODE}) ..."      
+      echo "... wait until $couchdb_url comming up to create databases (HttpCode is ${HTTP_CODE}) ..."
     fi
   done
 }
@@ -26,7 +26,7 @@ function wait_until_service_comes_up() {
 function check_database_exits(){
   local couchdb_url=$1 database_name=$2
   HTTP_CODE=$(curl -sL -w "%{http_code}\\n"  --connect-timeout 10 -o /dev/null -XGET "${couchdb_url}/${database_name}")
-  if [ 200 -eq $HTTP_CODE ]; then 
+  if [ 200 -eq $HTTP_CODE ]; then
     #0=true
     return 0
   else
@@ -37,18 +37,18 @@ function check_database_exits(){
 }
 
 ############################################
-function creare_database(){
+function create_database(){
   local couchdb_url=$1 database_name=$2
   HTTP_CODE=$(curl -sL -w "%{http_code}\\n" --connect-timeout 30 -XPUT "${couchdb_url}/${database_name}"  -o /dev/null)
   if [[ ( 200 -eq $HTTP_CODE ) || ( 201 -eq $HTTP_CODE ) ]]; then
-    echo "database $database_name created successfully on CouchDB."    
+    echo "database $database_name created successfully on CouchDB."
     #0=true
     return 0
   else
     echo "Create database $database_name failed with HTTP code: $HTTP_CODE"
     #1=false
     return 1
-  fi  
+  fi
 }
 
 ############################################
@@ -72,18 +72,18 @@ echo "---------------------------------------------"
 for i in "${db_array[@]}"
 do
    echo "Creating database $i ... "
-   creare_database "http://${COUCHDB_USER}:${COUCHDB_PASSWORD}@localhost:5984" "$i"
+   create_database "http://${COUCHDB_USER}:${COUCHDB_PASSWORD}@localhost:5984" "$i"
    echo "---------------------------------------------"
 done
 echo "Creating databases done."
 echo "--------------------------------------------#"
-fi 
+fi
 
 ################ Check if any internal databases exists #############################
 #ls -1 ${INTERNAL_TEMPLATCouchDB_DIR}/*.json > /dev/null 2>&1
 #if [ "$?" = "0" ]; then
-#  echo "#--------------------------------------------"  
-#  echo "Checking internal databases to import ..."  
+#  echo "#--------------------------------------------"
+#  echo "Checking internal databases to import ..."
 #  create_databases "http://localhost:9200" ${INTERNAL_TEMPLATCouchDB_DIR}
 #  echo "Creating internal databases on CouchDB Done."
 #  echo "---------------------------------------------#"
@@ -92,8 +92,8 @@ fi
 ################ Check if any external databases exists #############################
 #ls -1 ${EXTERNAL_TEMPLATCouchDB_DIR}/*.json > /dev/null 2>&1
 #if [ "$?" = "0" ]; then
-#  echo "#--------------------------------------------"  
-#  echo "Checking external databases to import ..."  
+#  echo "#--------------------------------------------"
+#  echo "Checking external databases to import ..."
 #  create_databases "http://localhost:9200" ${EXTERNAL_TEMPLATCouchDB_DIR}
 #  echo "Creating external databases on CouchDB Done."
 #  echo "---------------------------------------------#"
